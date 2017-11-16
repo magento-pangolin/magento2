@@ -1,0 +1,45 @@
+{
+    "description": "Magento 2 Functional Tests",
+    "config": {
+        "sort-packages": true
+    },
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "magento/magento2-functional-testing-framework",
+                "version": "dev-develop",
+                "type": "library",
+                "dist": {
+                    "type": "zip",
+                    "url": "magento2-functional-testing-framework-develop.zip"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Magento\\FunctionalTestingFramework\\": "src/Magento/FunctionalTestingFramework"
+                    }
+                }
+            }
+        }
+    ],
+    "require": {
+        "allure-framework/allure-codeception": "dev-master#af40af5ae2b717618a42fe3e137d75878508c75d",
+        "codeception/codeception": "2.2|2.3",
+        "consolidation/robo": "^1.0.0",
+        "henrikbjorn/lurker": "^1.2",
+        "magento/magento2-functional-testing-framework": "dev-develop",
+        "php": "7.0.2|7.0.4|~7.0.6|~7.1.0",
+        "vlucas/phpdotenv": "~2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Magento\\": "tests/functional/Magento"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

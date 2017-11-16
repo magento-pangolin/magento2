@@ -90,8 +90,8 @@ class CliColors {
  * @SuppressWarnings(PHPMD)
  */
 class PreInstallCheck {
-    private $installedViaBrew             = false;
-    private $filePath                     = '';
+    private $seleniumFilePath             = '';
+    private $chromeFilePath               = '';
     private $seleniumJarVersion           = '';
 
     private $phpWebsite                   = 'http://php.net/manual/en/install.php';
@@ -107,8 +107,8 @@ class PreInstallCheck {
     private $composerSupportedVersion     = '1.3.0';
     private $javaSupportedVersion         = '1.8.0';
     private $allureCliSupportedVersion    = '2.3.0';
-    private $seleniumSupportedVersion     = '3.6.0';
-    private $chromeDriverSupportedVersion = '2.33.0';
+    private $seleniumSupportedVersion     = '2.51.0';
+    private $chromeDriverSupportedVersion = '2.29.0';
     private $geckoDriverSupportedVersion  = '0.19.0';
     private $phantomJsSupportedVersion    = '2.1.0';
 
@@ -140,16 +140,14 @@ class PreInstallCheck {
     private $phantomJsStatus;
 
     function __construct() {
-        $this->didYouInstallViaBrew();
+        $this->getSeleniumAndChromeDriverInfo();
 
         $this->getPhpVersion = shell_exec('php --version');
         $this->getComposerVersion           = shell_exec('composer --version');
         $this->getJavaVersion               = shell_exec("java -version 2>&1");
         $this->getAllureCliVersion          = shell_exec('allure --version');
-        $this->getSeleniumVersion           = $this->getSeleniumVersion();
+        $this->getSeleniumVersion();
         $this->getChromeDriverVersion       = $this->getChromeDriverVersion();
-        $this->getGeckoDriverVersion        = shell_exec('geckodriver --version');
-        $this->getPhantomJsVersion          = $this->getPhantomJsVersion();
 
         $this->phpVersion                   = $this->parseVersion($this->getPhpVersion);
         $this->composerVersion              = $this->parseVersion($this->getComposerVersion);
@@ -157,18 +155,6 @@ class PreInstallCheck {
         $this->allureCliVersion             = $this->parseVersion($this->getAllureCliVersion);
         $this->seleniumVersion              = $this->parseVersion($this->getSeleniumVersion);
         $this->chromeDriverVersion          = $this->parseVersion($this->getChromeDriverVersion);
-        $this->geckoDriverVersion           = $this->parseVersion($this->getGeckoDriverVersion);
-        $this->phantomJsVersion             = $this->parseVersion($this->getPhantomJsVersion);
-
-        // String of null Versions - For Testing
-//        $this->phpVersion            = null;
-//        $this->composerVersion       = null;
-//        $this->javaVersion           = null;
-//        $this->allureCliVersion      = null;
-//        $this->seleniumVersion       = null;
-//        $this->chromeDriverVersion   = null;
-//        $this->geckoDriverVersion    = null;
-//        $this->phantomJsVersion      = null;
 
         // String of invalid Versions - For Testing
 //        $this->phpVersion            = '7.0.0';
@@ -186,8 +172,6 @@ class PreInstallCheck {
         $this->allureCliStatus    = $this->verifyVersion('Allure CLI', $this->allureCliVersion, $this->allureCliSupportedVersion, $this->allureCliWebsite);
         $this->seleniumStatus     = $this->verifyVersion('Selenium Standalone Server', $this->seleniumVersion, $this->seleniumSupportedVersion, $this->seleniumWebsite);
         $this->chromeDriverStatus = $this->verifyVersion('ChromeDriver', $this->chromeDriverVersion, $this->chromeDriverSupportedVersion, $this->chromeDriverWebsite);
-        $this->geckoDriverStatus  = $this->verifyVersion('GeckoDriver', $this->geckoDriverVersion, $this->geckoDriverSupportedVersion, $this->geckoDriverWebsite);
-        $this->phantomJsStatus    = $this->verifyVersion('PhantomJS', $this->phantomJsVersion, $this->phantomJsSupportedVersion, $this->phantomJsWebsite);
 
         ECHO "\n";
         $mask = "|%-13.13s |%18.18s |%18.18s |%-23.23s |\n";
@@ -200,37 +184,24 @@ class PreInstallCheck {
         printf($mask, ' Allure CLI',   $this->allureCliSupportedVersion    . '+',    $this->allureCliVersion, ' ' . $this->allureCliStatus);
         printf($mask, ' Selenium',     $this->seleniumSupportedVersion     . '+',     $this->seleniumVersion, ' ' . $this->seleniumStatus);
         printf($mask, ' ChromeDriver', $this->chromeDriverSupportedVersion . '+', $this->chromeDriverVersion, ' ' . $this->chromeDriverStatus);
-        printf($mask, ' GeckoDriver',  $this->geckoDriverSupportedVersion  . '+',  $this->geckoDriverVersion, ' ' . $this->geckoDriverStatus);
-        printf($mask, ' PhantomJS',    $this->phantomJsSupportedVersion    . '+',    $this->phantomJsVersion, ' ' . $this->phantomJsStatus);
         printf("---------------------------------------------------------------------------------\n");
     }
 
     /**
      * Ask if they installed the Browser Drivers via Brew.
-     * Brew installs things globally making them easier for us to access.
      */
-    public function didYouInstallViaBrew()
+    public function getSeleniumAndChromeDriverInfo()
     {
-        ECHO "Did you install Selenium Server, ChromeDriver, GeckoDriver and PhantomJS using Brew? (y/n) ";
-        $handle1 = fopen ("php://stdin","r");
-        $line1 = fgets($handle1);
-        if (trim($line1) != 'y') {
-            ECHO "Where did you save the files? (ex /Users/first_last/Automation/) ";
-            $handle2 = fopen ("php://stdin","r");
-            $this->filePath = fgets($handle2);
-            fclose($handle2);
+        ECHO "Provide absolute path to selenium-standalone jar: ";
+        $handle2 = fopen ("php://stdin","r");
+        $this->seleniumFilePath = fgets($handle2);
+        fclose($handle2);
 
-            ECHO "Which selenium-server-standalone-X.X.X.jar file did you download? (ex 3.6.0) ";
-            $handle3 = fopen ("php://stdin","r");
-            $this->seleniumJarVersion = fgets($handle3);
-            fclose($handle3);
-            fclose($handle1);
-            ECHO "\n";
-        } else {
-            $this->installedViaBrew = true;
-            fclose($handle1);
-            ECHO "\n";
-        }
+        ECHO "Provide absolute path to chromedriver: ";
+        $handle3 = fopen ("php://stdin","r");
+        $this->chromeFilePath = fgets($handle3);
+        fclose($handle3);
+        ECHO "\n";
     }
 
     /**
@@ -275,17 +246,17 @@ class PreInstallCheck {
      */
     public function getSeleniumVersion()
     {
-        $this->installedViaBrew;
-        $this->filePath;
-        $this->seleniumJarVersion;
-
-        if ($this->installedViaBrew) {
-            return shell_exec('selenium-server --version');
-        } else {
-            $command = sprintf('java -jar %s/selenium-server-standalone-%s.jar --version', $this->filePath, $this->seleniumJarVersion);
-            $command = str_replace(array("\r", "\n"), '', $command) . "\n";
-            return shell_exec($command);
-        }
+        $command = sprintf('unzip -p %s META-INF/MANIFEST.MF', $this->seleniumFilePath);
+        $command = str_replace(array("\r", "\n"), '', $command) . "\n";
+        $contents = shell_exec($command);
+        $arr = array_filter(explode("\r\n", $contents));
+        array_walk($arr, function ($val, $key)
+        {
+            if (strpos(trim($val), 'Selenium-Version') !== false) {
+                $vals = explode(':', $val);
+                $this->getSeleniumVersion = trim($vals[1]);
+            }
+        });
     }
 
     /**
@@ -295,35 +266,9 @@ class PreInstallCheck {
      */
     public function getChromeDriverVersion()
     {
-        $this->installedViaBrew;
-        $this->filePath;
-
-        if ($this->installedViaBrew) {
-            return shell_exec('chromedriver --version');
-        } else {
-            $command = sprintf('%s/chromedriver --version', $this->filePath);
-            $command = str_replace(array("\r", "\n"), '', $command) . "\n";
-            return shell_exec($command);
-        }
-    }
-
-    /**
-     * Get the PhantomJS version based on how it was installed.
-     *
-     * @return string
-     */
-    public function getPhantomJsVersion()
-    {
-        $this->installedViaBrew;
-        $this->filePath;
-
-        if ($this->installedViaBrew) {
-            return shell_exec('phantomjs --version');
-        } else {
-            $command = sprintf('%s/phantomjs --version', $this->filePath);
-            $command = str_replace(array("\r", "\n"), '', $command) . "\n";
-            return shell_exec($command);
-        }
+        $command = sprintf('%s --version', $this->chromeFilePath);
+        $command = str_replace(array("\r", "\n"), '', $command) . "\n";
+        return shell_exec($command);
     }
 
     /**

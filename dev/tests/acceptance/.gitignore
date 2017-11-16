@@ -1,5 +1,6 @@
 .idea
 .env
+README.md
 codeception.yml
 tests/_output/*
 tests/functional.suite.yml
