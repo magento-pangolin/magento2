@@ -14,7 +14,7 @@
             <stories value="Create a Simple Product via Admin"/>
         </annotations>
         <before>
-            <createData entity="_defaultCategory" mergeKey="createPreReqCategory"/>
+            <!-- create a category to use with the test -->
         </before>
         <test name="CreateSimpleProductViaAdmin">
             <annotations>
@@ -26,45 +26,23 @@
                 <env value="chrome"/>
                 <env value="headless"/>
             </annotations>
-            <amOnPage url="{{AdminLoginPage.url}}" mergeKey="navigateToAdmin"/>
-            <fillField userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}" selector="{{AdminLoginFormSection.username}}" mergeKey="fillUsername"/>
-            <fillField userInput="{{_ENV.MAGENTO_ADMIN_PASSWORD}}" selector="{{AdminLoginFormSection.password}}" mergeKey="fillPassword"/>
-            <click selector="{{AdminLoginFormSection.signIn}}" mergeKey="clickLogin"/>
-            <amOnPage url="{{AdminProductIndexPage.url}}" mergeKey="navigateToProductIndex"/>
-            <click selector="{{AdminProductGridActionSection.addProductToggle}}" mergeKey="clickAddProductDropdown"/>
-            <click selector="{{AdminProductGridActionSection.addSimpleProduct}}" mergeKey="clickAddSimpleProduct"/>
-            <fillField userInput="{{_defaultProduct.name}}" selector="{{AdminProductFormSection.productName}}" mergeKey="fillName"/>
-            <fillField userInput="{{_defaultProduct.sku}}" selector="{{AdminProductFormSection.productSku}}" mergeKey="fillSKU"/>
-            <fillField userInput="{{_defaultProduct.price}}" selector="{{AdminProductFormSection.productPrice}}" mergeKey="fillPrice"/>
-            <fillField userInput="{{_defaultProduct.quantity}}" selector="{{AdminProductFormSection.productQuantity}}" mergeKey="fillQuantity"/>
-            <searchAndMultiSelectOption selector="{{AdminProductFormSection.categoriesDropdown}}" parameterArray="[$$createPreReqCategory.name$$]" mergeKey="searchAndSelectCategory"/>
-            <click selector="{{AdminProductSEOSection.sectionHeader}}" mergeKey="openSeoSection"/>
-            <fillField userInput="{{_defaultProduct.urlKey}}" selector="{{AdminProductSEOSection.urlKeyInput}}" mergeKey="fillUrlKey"/>
-            <click selector="{{AdminProductFormActionSection.saveButton}}" mergeKey="saveProduct"/>
-            <seeElement selector="{{AdminProductMessagesSection.successMessage}}" mergeKey="assertSaveMessageSuccess"/>
-            <seeInField userInput="{{_defaultProduct.name}}" selector="{{AdminProductFormSection.productName}}" mergeKey="assertFieldName"/>
-            <seeInField userInput="{{_defaultProduct.sku}}" selector="{{AdminProductFormSection.productSku}}" mergeKey="assertFieldSku"/>
-            <seeInField userInput="{{_defaultProduct.price}}" selector="{{AdminProductFormSection.productPrice}}" mergeKey="assertFieldPrice"/>
-            <click selector="{{AdminProductSEOSection.sectionHeader}}" mergeKey="openSeoSectionAssert"/>
-            <seeInField userInput="{{_defaultProduct.urlKey}}" selector="{{AdminProductSEOSection.urlKeyInput}}" mergeKey="assertFieldUrlKey"/>
+            <!-- login as an admin -->
+            <!-- go to the product index page -->
+            <!-- click on the add product toggle -->
+            <!-- click on add simple product -->
+            <!-- fill in product name, sku, price, quantity -->
+            <!-- select created cateogry name from dropdown -->
+            <!-- open seo section -->
+            <!-- fill product url key -->
+            <!-- click save button -->
+            <!-- validate save message and product information -->
 
-            <!-- Go to storefront category page, assert product visibility -->
-            <amOnPage url="{{StorefrontCategoryPage.url($$createPreReqCategory.name$$)}}" mergeKey="navigateToCategoryPage"/>
-            <waitForPageLoad mergeKey="waitForPageLoad1"/>
-            <see userInput="{{_defaultProduct.name}}" mergeKey="assertProductPresent"/>
-            <see userInput="{{_defaultProduct.price}}" mergeKey="assertProductPricePresent"/>
+            <!-- Optional, Go to storefront category page, assert product visibility -->
 
-            <!-- Go to storefront product page, assert product visibility -->
-            <amOnPage url="{{_defaultProduct.urlKey}}.html" mergeKey="navigateToProductPage"/>
-            <waitForPageLoad mergeKey="waitForPageLoad2"/>
-            <seeInTitle userInput="{{_defaultProduct.name}}" mergeKey="assertProductNameTitle"/>
-            <see userInput="{{_defaultProduct.name}}" selector="{{StorefrontProductInfoMainSection.productName}}" mergeKey="assertProductName"/>
-            <see userInput="{{_defaultProduct.price}}" selector="{{StorefrontProductInfoMainSection.productPrice}}" mergeKey="assertProductPrice"/>
-            <see userInput="{{_defaultProduct.sku}}" selector="{{StorefrontProductInfoMainSection.productSku}}" mergeKey="assertProductSku"/>
+            <!-- Optional,  Go to storefront product page, assert product visibility -->
         </test>
         <after>
-            <deleteData createDataKey="createPreReqCategory" mergeKey="deletePreReqCategory"/>
-            <amOnPage url="admin/admin/auth/logout/" mergeKey="amOnLogoutPage"/>
+            <!-- delete created category -->
         </after>
     </cest>
 </config>

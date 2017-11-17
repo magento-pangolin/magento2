@@ -25,7 +25,7 @@ Welcome to the new Magento Functional Tests! We're excited for you to try out th
 # Installation
 You can set up the repo via this git repository.
 ```
-git clone GITHUB_REPO_URL
+git clone https://github.com/magento-pangolin/magento2
 cd magento2/dev/tests/acceptance
 composer install
 ```
