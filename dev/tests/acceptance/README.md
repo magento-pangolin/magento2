@@ -44,19 +44,6 @@ After installing the dependencies you will want to build the Codeception project
 
 ----
 
-# Configure the Framework
-Before you can generate or run the Tests you will need to clone the Example Configuration files and edit them for your specific Store settings. You can edit these files with out the fear of accidentally committing your credentials or other sensitive information as these files are listed in the *.gitignore* file.
-Run the following command to generate these files:
-
-`robo setup`
-
-In these files you will find key pieces of information that are unique to your local Magento setup that will need to be edited (ex **MAGENTO_BASE_URL**, **MAGENTO_BACKEND_NAME**, **MAGENTO_ADMIN_USERNAME**, **MAGENTO_ADMIN_PASSWORD**, etc...).
-* **tests/functional.suite.yml**
-* **codeception.dist.yml**
-* **.env**
-
-----
-
 # Generate PHP files for Tests
 All Tests in the Framework are written in XML and need to have the PHP generated for Codeception to run. Run the following command to generate the PHP files into the following directory: `tests/acceptance/Magento/FunctionalTest/_generated`
 
