@@ -197,9 +197,15 @@ class PreInstallCheck {
         $this->seleniumFilePath = fgets($handle2);
         fclose($handle2);
 
+        if ($this->chromeFilePath = $this->getChromeDriverPath()) {
+            ECHO sprintf("ChromeDriver (ver. %s) detected in: %s", $this->parseVersion($this->getChromeDriverVersion()), $this->chromeFilePath);
+            ECHO "You can override this path below (leave empty to use detected one).\n";
+        }
         ECHO "Provide absolute path to chromedriver: ";
         $handle3 = fopen ("php://stdin","r");
-        $this->chromeFilePath = fgets($handle3);
+        if ($newChromeFilePath = trim(fgets($handle3))) {
+            $this->chromeFilePath = $newChromeFilePath;
+        }
         fclose($handle3);
         ECHO "\n";
     }
@@ -257,6 +263,15 @@ class PreInstallCheck {
                 $this->getSeleniumVersion = trim($vals[1]);
             }
         });
+    }
+
+    /**
+     * @return string
+     */
+    private function getChromeDriverPath()
+    {
+        $command = 'which chromedriver';
+        return shell_exec($command);
     }
 
     /**
