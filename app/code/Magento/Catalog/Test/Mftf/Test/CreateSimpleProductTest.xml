@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="CreateSimpleProductTest">
+        <annotations>
+            <features value="Catalog"/>
+            <stories value="Create Product"/>
+            <title value="Admin should be able to create simple product."/>
+            <description value="Admin should be able to create simple product."/>
+            <severity value="MAJOR"/>
+            <group value="Catalog"/>
+        </annotations>
+        <before>
+            <!-- Login to Admin panel -->
+        </before>
+        <after>
+            <!-- Logout from Admin panel -->
+        </after>
+
+        <!-- Navigate to Catalog -> Products page (or just open by link) -->
+
+        <!-- Click "Add Product" button -->
+
+        <!-- Fill field "Name" with "Simple Product %unique_value%" -->
+        <!-- Fill field "SKU" with "simple_product_%unique_value%" -->
+        <!-- Fill field "Price" with "500.00" -->
+        <!-- Fill field "Quantity" with "100" -->
+        <!-- Fill field "Weight" with "100" -->
+
+        <!-- Click "Save" button -->
+
+        <!-- See success save message "You saved the product." -->
+
+        <!-- Navigate to Catalog -> Products page (or just open by link) -->
+
+        <!-- See created product is in grid -->
+        <!-- See "Name" in grid is valid -->
+        <!-- See "SKU" in grid is valid -->
+        <!-- See "Price" in grid is valid -->
+        <!-- See "Quantity" in grid is valid -->
+
+        <!-- Open Storefront Product Page and verify "Name", "SKU", "Price" -->
+    </test>
+</tests>
