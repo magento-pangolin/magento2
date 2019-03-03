@@ -20,72 +20,69 @@
         </annotations>
         <before>
             <!-- Login to Admin panel -->
-            <amOnPage url="admin" stepKey="openAdminPanelPage" />
-            <fillField selector="#username" userInput="admin" stepKey="fillLoginField" />
-            <fillField selector="#login" userInput="123123q" stepKey="fillPasswordField" />
-            <click selector="#login-form .action-login" stepKey="clickLoginButton" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginToAdminPanel" />
         </before>
         <after>
             <!-- Logout from Admin panel -->
         </after>
 
         <!-- Navigate to Catalog -> Products page (or just open by link) -->
-        <amOnPage url="admin/catalog/product/index" stepKey="openProductGridPage" />
+        <amOnPage url="{{AdminProductIndexPage.url}}" stepKey="openProductGridPage" />
 
         <!-- Click "Add Product" button -->
-        <click selector="#add_new_product-button" stepKey="clickAddProductButton" />
+        <click selector="{{AdminProductGridActionSection.addProductBtn}}" stepKey="clickAddProductButton" />
         <waitForPageLoad stepKey="waitForNewProductPageOpened" />
 
         <!-- Fill field "Name" with "Simple Product %unique_value%" -->
-        <fillField selector="input[name='product[name]']" userInput="Simple Product 12412431" stepKey="fillNameField" />
+        <fillField selector="{{AdminProductFormSection.productName}}" userInput="Simple Product 12412431" stepKey="fillNameField" />
 
         <!-- Fill field "SKU" with "simple_product_%unique_value%" -->
-        <fillField selector="input[name='product[sku]']" userInput="simple-product-12412431" stepKey="fillSKUField" />
+        <fillField selector="{{AdminProductFormSection.productSku}}" userInput="simple-product-12412431" stepKey="fillSKUField" />
 
         <!-- Fill field "Price" with "500.00" -->
-        <fillField selector="input[name='product[price]']" userInput="500.00" stepKey="fillPriceField" />
+        <fillField selector="{{AdminProductFormSection.productPrice}}" userInput="500.00" stepKey="fillPriceField" />
 
         <!-- Fill field "Quantity" with "100" -->
-        <fillField selector="input[name='product[quantity_and_stock_status][qty]']" userInput="100" stepKey="fillQtyField" />
+        <fillField selector="{{AdminProductFormSection.productQuantity}}" userInput="100" stepKey="fillQtyField" />
 
         <!-- Fill field "Weight" with "100" -->
-        <fillField selector="input[name='product[weight]']" userInput="100" stepKey="fillWeightField" />
+        <fillField selector="{{AdminProductFormSection.productWeight}}" userInput="100" stepKey="fillWeightField" />
 
         <!-- Click "Save" button -->
-        <click selector="#save-button" stepKey="clickSaveButton" />
+        <click selector="{{AdminProductFormSection.save}}" stepKey="clickSaveButton" />
         <waitForPageLoad stepKey="waitForProductIsSaved" />
         <!-- See success save message "You saved the product." -->
-        <see selector="[data-ui-id='messages-message-success']" userInput="You saved the product." stepKey="seeSuccessMessage" />
+        <see selector="{{AdminMessagesSection.success}}" userInput="You saved the product." stepKey="seeSuccessMessage" />
 
         <!-- Navigate to Catalog -> Products page (or just open by link) -->
-        <amOnPage url="admin/catalog/product/index" stepKey="openProductGridPageToVerifySavedProduct" />
+        <amOnPage url="{{AdminProductIndexPage.url}}" stepKey="openProductGridPageToVerifySavedProduct" />
 
         <!-- See created product is in grid -->
-        <click selector=".//div[@class='admin__data-grid-header'][(not(ancestor::*[@class='sticky-header']) and not(contains(@style,'visibility: hidden'))) or (ancestor::*[@class='sticky-header' and not(contains(@style,'display: none'))])]//button[@data-action='grid-filter-expand']" stepKey="clickFiltersButton" />
+        <click selector="{{AdminProductGridFilterSection.filters}}" stepKey="clickFiltersButton" />
 
         <!-- See "Name" in grid is valid -->
-        <fillField selector="input[name='name']" userInput="Simple Product 12412431" stepKey="fillNameFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.nameFilter}}" userInput="Simple Product 12412431" stepKey="fillNameFilterField" />
 
         <!-- See "SKU" in grid is valid -->
-        <fillField selector="input[name='sku']" userInput="simple-product-12412431" stepKey="fillSkuFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.skuFilter}}" userInput="simple-product-12412431" stepKey="fillSkuFilterField" />
 
         <!-- See "Price" in grid is valid -->
-        <fillField selector="input[name='price[from]']" userInput="500.00" stepKey="fillPriceFromFilterField" />
-        <fillField selector="input[name='price[to]']" userInput="500.00" stepKey="fillPriceToFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.priceFilterFrom}}" userInput="500.00" stepKey="fillPriceFromFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.priceFilterTo}}" userInput="500.00" stepKey="fillPriceToFilterField" />
 
         <!-- See "Quantity" in grid is valid -->
-        <fillField selector="input[name='qty[from]']" userInput="100" stepKey="fillQtyFromFilterField" />
-        <fillField selector="input[name='qty[to]']" userInput="100" stepKey="fillQtyToFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.quantityFrom}}" userInput="100" stepKey="fillQtyFromFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.quantityTo}}" userInput="100" stepKey="fillQtyToFilterField" />
 
-        <click selector=".//div[@class='admin__data-grid-header'][(not(ancestor::*[@class='sticky-header']) and not(contains(@style,'visibility: hidden'))) or (ancestor::*[@class='sticky-header' and not(contains(@style,'display: none'))])]//button[@data-action='grid-filter-apply']" stepKey="clickApplyFilterButton" />
+        <click selector="{{AdminProductGridFilterSection.applyFilters}}" stepKey="clickApplyFilterButton" />
         <waitForPageLoad stepKey="waitForFiltersApplied" />
 
-        <dontSee selector=".data-grid-tr-no-data" userInput="We couldn't find any records." stepKey="dontSeeCouldntFindMessage" />
+        <dontSee selector="{{AdminDataGridTableSection.dataGridEmpty}}" userInput="We couldn't find any records." stepKey="dontSeeCouldntFindMessage" />
 
         <!-- Open Storefront Product Page and verify "Name", "SKU", "Price" -->
         <amOnPage url="simple-product-12412431.html" stepKey="openProductOnStorefront" />
-        <see selector="[itemprop='name']" userInput="Simple Product 12412431" stepKey="seeProductName" />
-        <see selector="[itemprop='sku']" userInput="simple-product-12412431" stepKey="seeProductSku" />
-        <see selector="[itemprop='offers']" userInput="$500.00" stepKey="seeProductPrice" />
+        <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="Simple Product 12412431" stepKey="seeProductName" />
+        <see selector="{{StorefrontProductInfoMainSection.productSku}}" userInput="simple-product-12412431" stepKey="seeProductSku" />
+        <see selector="{{StorefrontProductInfoMainSection.productPrice}}" userInput="$500.00" stepKey="seeProductPrice" />
     </test>
 </tests>
