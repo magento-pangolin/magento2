@@ -34,19 +34,19 @@
         <waitForPageLoad stepKey="waitForNewProductPageOpened" />
 
         <!-- Fill field "Name" with "Simple Product %unique_value%" -->
-        <fillField selector="{{AdminProductFormSection.productName}}" userInput="Simple Product 12412431" stepKey="fillNameField" />
+        <fillField selector="{{AdminProductFormSection.productName}}" userInput="{{_defaultProduct.name}}" stepKey="fillNameField" />
 
         <!-- Fill field "SKU" with "simple_product_%unique_value%" -->
-        <fillField selector="{{AdminProductFormSection.productSku}}" userInput="simple-product-12412431" stepKey="fillSKUField" />
+        <fillField selector="{{AdminProductFormSection.productSku}}" userInput="{{_defaultProduct.sku}}" stepKey="fillSKUField" />
 
         <!-- Fill field "Price" with "500.00" -->
-        <fillField selector="{{AdminProductFormSection.productPrice}}" userInput="500.00" stepKey="fillPriceField" />
+        <fillField selector="{{AdminProductFormSection.productPrice}}" userInput="{{_defaultProduct.price}}" stepKey="fillPriceField" />
 
         <!-- Fill field "Quantity" with "100" -->
-        <fillField selector="{{AdminProductFormSection.productQuantity}}" userInput="100" stepKey="fillQtyField" />
+        <fillField selector="{{AdminProductFormSection.productQuantity}}" userInput="{{_defaultProduct.quantity}}" stepKey="fillQtyField" />
 
         <!-- Fill field "Weight" with "100" -->
-        <fillField selector="{{AdminProductFormSection.productWeight}}" userInput="100" stepKey="fillWeightField" />
+        <fillField selector="{{AdminProductFormSection.productWeight}}" userInput="{{_defaultProduct.weight}}" stepKey="fillWeightField" />
 
         <!-- Click "Save" button -->
         <click selector="{{AdminProductFormSection.save}}" stepKey="clickSaveButton" />
@@ -61,18 +61,18 @@
         <click selector="{{AdminProductGridFilterSection.filters}}" stepKey="clickFiltersButton" />
 
         <!-- See "Name" in grid is valid -->
-        <fillField selector="{{AdminProductGridFilterSection.nameFilter}}" userInput="Simple Product 12412431" stepKey="fillNameFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.nameFilter}}" userInput="{{_defaultProduct.name}}" stepKey="fillNameFilterField" />
 
         <!-- See "SKU" in grid is valid -->
-        <fillField selector="{{AdminProductGridFilterSection.skuFilter}}" userInput="simple-product-12412431" stepKey="fillSkuFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.skuFilter}}" userInput="{{_defaultProduct.sku}}" stepKey="fillSkuFilterField" />
 
         <!-- See "Price" in grid is valid -->
-        <fillField selector="{{AdminProductGridFilterSection.priceFilterFrom}}" userInput="500.00" stepKey="fillPriceFromFilterField" />
-        <fillField selector="{{AdminProductGridFilterSection.priceFilterTo}}" userInput="500.00" stepKey="fillPriceToFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.priceFilterFrom}}" userInput="{{_defaultProduct.price}}" stepKey="fillPriceFromFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.priceFilterTo}}" userInput="{{_defaultProduct.price}}" stepKey="fillPriceToFilterField" />
 
         <!-- See "Quantity" in grid is valid -->
-        <fillField selector="{{AdminProductGridFilterSection.quantityFrom}}" userInput="100" stepKey="fillQtyFromFilterField" />
-        <fillField selector="{{AdminProductGridFilterSection.quantityTo}}" userInput="100" stepKey="fillQtyToFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.quantityFrom}}" userInput="{{_defaultProduct.quantity}}" stepKey="fillQtyFromFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.quantityTo}}" userInput="{{_defaultProduct.quantity}}" stepKey="fillQtyToFilterField" />
 
         <click selector="{{AdminProductGridFilterSection.applyFilters}}" stepKey="clickApplyFilterButton" />
         <waitForPageLoad stepKey="waitForFiltersApplied" />
@@ -80,9 +80,9 @@
         <dontSee selector="{{AdminDataGridTableSection.dataGridEmpty}}" userInput="We couldn't find any records." stepKey="dontSeeCouldntFindMessage" />
 
         <!-- Open Storefront Product Page and verify "Name", "SKU", "Price" -->
-        <amOnPage url="simple-product-12412431.html" stepKey="openProductOnStorefront" />
-        <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="Simple Product 12412431" stepKey="seeProductName" />
-        <see selector="{{StorefrontProductInfoMainSection.productSku}}" userInput="simple-product-12412431" stepKey="seeProductSku" />
-        <see selector="{{StorefrontProductInfoMainSection.productPrice}}" userInput="$500.00" stepKey="seeProductPrice" />
+        <amOnPage url="{{_defaultProduct.name}}.html" stepKey="openProductOnStorefront" />
+        <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="{{_defaultProduct.name}}" stepKey="seeProductName" />
+        <see selector="{{StorefrontProductInfoMainSection.productSku}}" userInput="{{_defaultProduct.sku}}" stepKey="seeProductSku" />
+        <see selector="{{StorefrontProductInfoMainSection.productPrice}}" userInput="${{_defaultProduct.price}}" stepKey="seeProductPrice" />
     </test>
 </tests>
