@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <!--Fill main fields in create product form-->
+    <actionGroup name="fillMainProductForm">
+        <remove keyForRemoval="selectStockStatus" />
+        <remove keyForRemoval="fillProductQty" />
+        <scrollTo selector="[data-index='sources']" x="0" y="-80" stepKey="scrollToSources" />
+        <click selector="[data-index='sources'] button[data-index='assign_sources_button']" stepKey="clickAssignSourcesButton" />
+        <waitForPageLoad stepKey="waitForModalAppear" />
+        <checkOption selector="//tr[td[contains(.,'default')]]//input[@data-action='select-row']" stepKey="checkDefaultSource" />
+        <click selector=".product_form_product_form_sources_assign_sources_modal button.action-primary" stepKey="clickDoneButton" />
+        <fillField selector="//table[@data-index='assigned_sources']//tr[td[contains(.,'default')]]//*[@data-index='quantity']//input" userInput="{{product.quantity}}" stepKey="fillQuantityDefaultSource" />
+    </actionGroup>
+</actionGroups>
