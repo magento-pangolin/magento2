@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AssertProductInGridActionGroup" extends="viewProductInAdminGrid">
+        <!-- See "Price" in grid is valid -->
+        <fillField selector="{{AdminProductGridFilterSection.priceFilterFrom}}" userInput="{{_defaultProduct.price}}" stepKey="fillPriceFromFilterField" after="fillProductSkuFilter" />
+        <fillField selector="{{AdminProductGridFilterSection.priceFilterTo}}" userInput="{{_defaultProduct.price}}" stepKey="fillPriceToFilterField" after="fillPriceFromFilterField" />
+
+        <!-- See "Quantity" in grid is valid -->
+        <fillField selector="{{AdminProductGridFilterSection.quantityFrom}}" userInput="{{_defaultProduct.quantity}}" stepKey="fillQtyFromFilterField" after="fillPriceToFilterField" />
+        <fillField selector="{{AdminProductGridFilterSection.quantityTo}}" userInput="{{_defaultProduct.quantity}}" stepKey="fillQtyToFilterField" after="fillQtyFromFilterField" />
+
+        <dontSee selector="{{AdminDataGridTableSection.dataGridEmpty}}" userInput="We couldn't find any records." stepKey="dontSeeCouldntFindMessage" after="clickApplyFilters" />
+    </actionGroup>
+</actionGroups>
