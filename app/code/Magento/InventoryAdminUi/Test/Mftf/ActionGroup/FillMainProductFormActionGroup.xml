@@ -15,8 +15,8 @@
         <scrollTo selector="{{AdminProductSourcesSection.sourcesBlock}}" x="0" y="-80" stepKey="scrollToSources" />
         <click selector="{{AdminProductSourcesSection.assignSources}}" stepKey="clickAssignSourcesButton" />
         <waitForPageLoad stepKey="waitForModalAppear" />
-        <checkOption selector="{{AdminAssignSourcesSlideOutGridSection.checkboxByCode('default')}}" stepKey="checkDefaultSource" />
+        <checkOption selector="{{AdminAssignSourcesSlideOutGridSection.checkboxByCode(product.source)}}" stepKey="checkDefaultSource" />
         <click selector="{{AdminAssignSourcesSlideOutSection.done}}" stepKey="clickDoneButton" />
-        <fillField selector="{{AdminProductSourcesGrid.rowQtyByCode('default')}}" userInput="{{product.quantity}}" stepKey="fillQuantityDefaultSource" />
+        <fillField selector="{{AdminProductSourcesGrid.rowQtyByCode(product.source)}}" userInput="{{product.quantity}}" stepKey="fillQuantityDefaultSource" />
     </actionGroup>
 </actionGroups>

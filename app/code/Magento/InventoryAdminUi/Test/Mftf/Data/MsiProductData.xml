@@ -8,6 +8,9 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <entity name="_defaultProduct">
+        <data key="source">default</data>
+    </entity>
     <entity name="SimpleMsiProduct" type="product">
         <data key="name" unique="suffix">Simple MSI Product </data>
         <data key="sku" unique="suffix">Simple_MSI_Product_</data>
