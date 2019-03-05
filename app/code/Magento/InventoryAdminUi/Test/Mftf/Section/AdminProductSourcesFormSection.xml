@@ -9,12 +9,15 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="AdminProductSourcesSection">
+        <element name="sourcesBlock" type="block" selector="[data-index='sources']" />
         <element name="assignSources" type="button" selector="button[data-index='assign_sources_button']" timeout="30"/>
         <element name="advancedInventory" type="button" selector="button[data-index='advanced_inventory_button']" timeout="30"/>
     </section>
     <section name="AdminProductSourcesGrid">
         <element name="rowByIndex" type="input" selector="div[data-index='sources'] .data-row[data-repeat-index='{{arg1}}']" parameterized="true"/>
         <element name="firstRow" type="input" selector="div[data-index='sources'] .data-row[data-repeat-index='0']"/>
+
+        <element name="rowQtyByCode" type="input" selector="//table[@data-index='assigned_sources']//tr[td[contains(.,'{{code}}')]]//*[@data-index='quantity']//input" parameterized="true" />
 
         <element name="rowId" type="button" selector=".data-row[data-repeat-index='{{arg1}}'] span[data-index='source_code']" parameterized="true"/>
         <element name="rowName" type="button" selector=".data-row[data-repeat-index='{{arg1}}'] span[data-index='name']" parameterized="true"/>

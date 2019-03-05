@@ -12,11 +12,11 @@
     <actionGroup name="fillMainProductForm">
         <remove keyForRemoval="selectStockStatus" />
         <remove keyForRemoval="fillProductQty" />
-        <scrollTo selector="[data-index='sources']" x="0" y="-80" stepKey="scrollToSources" />
-        <click selector="[data-index='sources'] button[data-index='assign_sources_button']" stepKey="clickAssignSourcesButton" />
+        <scrollTo selector="{{AdminProductSourcesSection.sourcesBlock}}" x="0" y="-80" stepKey="scrollToSources" />
+        <click selector="{{AdminProductSourcesSection.assignSources}}" stepKey="clickAssignSourcesButton" />
         <waitForPageLoad stepKey="waitForModalAppear" />
-        <checkOption selector="//tr[td[contains(.,'default')]]//input[@data-action='select-row']" stepKey="checkDefaultSource" />
-        <click selector=".product_form_product_form_sources_assign_sources_modal button.action-primary" stepKey="clickDoneButton" />
-        <fillField selector="//table[@data-index='assigned_sources']//tr[td[contains(.,'default')]]//*[@data-index='quantity']//input" userInput="{{product.quantity}}" stepKey="fillQuantityDefaultSource" />
+        <checkOption selector="{{AdminAssignSourcesSlideOutGridSection.checkboxByCode('default')}}" stepKey="checkDefaultSource" />
+        <click selector="{{AdminAssignSourcesSlideOutSection.done}}" stepKey="clickDoneButton" />
+        <fillField selector="{{AdminProductSourcesGrid.rowQtyByCode('default')}}" userInput="{{product.quantity}}" stepKey="fillQuantityDefaultSource" />
     </actionGroup>
 </actionGroups>
